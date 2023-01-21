@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "168048754169",
+    "project_id": "superhero-rendezvous",
+    "storage_bucket": "superhero-rendezvous.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168048754169:android:408e876ed5e1872b6e1128",
+        "android_client_info": {
+          "package_name": "com.datingapp.superhero_rendezvous"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168048754169-vp7nhm4phhqn9u3u565be92hp99hcrsd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdiPfXtBk3J4DUPR_wes7AkEpKjSpmaVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168048754169-vp7nhm4phhqn9u3u565be92hp99hcrsd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
