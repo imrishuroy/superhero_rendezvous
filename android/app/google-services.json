@@ -29,6 +29,13 @@
             {
               "client_id": "168048754169-vp7nhm4phhqn9u3u565be92hp99hcrsd.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "168048754169-1b881jnsq4hr21ufnv5dji1ht3hrt7ak.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.datingapp.superheroRendezvous"
+              }
             }
           ]
         }

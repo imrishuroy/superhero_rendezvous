@@ -20,7 +20,6 @@ import '/enums/connect_status.dart';
 import '/models/app_user.dart';
 import '/models/connect.dart';
 import '/screens/dashboard/cubit/dashboard_cubit.dart';
-import '/screens/login/login_screen.dart';
 import '/screens/notifictions/cubit/notifications_cubit.dart';
 import '/screens/notifictions/notifications_screen.dart';
 import '/services/local_notification_service.dart';
@@ -576,8 +575,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   GestureDetector(
                                     onTap: () {
                                       if (authBloc.state.user == null) {
-                                        Navigator.of(context)
-                                            .pushNamed(LoginScreen.routeName);
+                                        // Navigator.of(context)
+                                        //     .pushNamed(LoginScreen.routeName);
                                       } else if (connect.status !=
                                           ConnectStatus.connected) {
                                         context

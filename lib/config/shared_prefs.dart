@@ -1,6 +1,8 @@
 import 'dart:convert';
-import '/models/birth_details.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '/models/birth_details.dart';
 
 const String _showIntro = 'showIntro';
 const String keyTheme = 'theme';

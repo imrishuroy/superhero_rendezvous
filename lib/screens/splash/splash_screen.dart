@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '/config/auth_wrapper.dart';
-import '/config/shared_prefs.dart';
-import '/screens/registration/screens/registration_prompt.dart';
+import 'package:go_router/go_router.dart';
+import 'package:superhero_rendezvous/constants/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = '/splash';
@@ -24,26 +22,37 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late Timer _timer;
   @override
   void initState() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_timer.tick == 4) {
-        if (SharedPrefs().skipRegistration) {
-          Navigator.of(context).pushReplacementNamed(AuthWrapper.routeName);
-        } else {
-          Navigator.of(context)
-              .pushReplacementNamed(RegistrationPrompt.routeName);
-        }
-        //
-      }
-    });
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        context.pushNamed(RoutePaths.authWrapper);
+
+        // if (SharedPrefs().skipRegistration) {
+        //   Navigator.of(context).pushReplacementNamed(AuthWrapper.routeName);
+        // } else {
+        //   Navigator.of(context).pushReplacementNamed(RegistrationPrompt.routeName);
+        // }
+      },
+    );
+
+    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    //   if (_timer.tick == 4) {
+    //     if (SharedPrefs().skipRegistration) {
+    //       Navigator.of(context).pushReplacementNamed(AuthWrapper.routeName);
+    //     } else {
+    //       Navigator.of(context)
+    //           .pushReplacementNamed(RegistrationPrompt.routeName);
+    //     }
+    //     //
+    //   }
+    // });
     super.initState();
   }
 
   @override
   void dispose() {
-    _timer.cancel();
     super.dispose();
   }
 

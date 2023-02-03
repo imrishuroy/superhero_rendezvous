@@ -6,12 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
-import '/blocs/auth/auth_bloc.dart';
 import '/constants/constants.dart';
 import '/enums/enums.dart';
-import '/repositories/auth/auth_repo.dart';
-import '/screens/login/login_screen.dart';
-import '/screens/nav/nav_screen.dart';
 import '/screens/registration/cubit/registration_cubit.dart';
 import '/utils/utils.dart';
 import '/widgets/birth_fields.dart';
@@ -19,31 +15,42 @@ import '/widgets/choose_gender.dart';
 import '/widgets/curved_container.dart';
 import '/widgets/custom_textfield.dart';
 import '/widgets/loading_indicator.dart';
+import '/widgets/responsive.dart';
 import '/widgets/show_snakbar.dart';
 import '/widgets/time_zone_field.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  static const String routeName = '/registration';
-  const RegistrationScreen({Key? key}) : super(key: key);
-
-  static Route route() {
-    return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (_) => BlocProvider(
-        create: (context) => RegistrationCubit(
-          authRepository: context.read<AuthRepository>(),
-          authBloc: context.read<AuthBloc>(),
-        ),
-        child: const RegistrationScreen(),
-      ),
-    );
-  }
+class RegistrationScreen extends StatelessWidget {
+  const RegistrationScreen({super.key});
 
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
+  Widget build(BuildContext context) {
+    return Responsive.isDesktop(context) || Responsive.isTablet(context)
+        ? Scaffold(
+            body: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: 600,
+                  maxHeight: 600.0,
+                ),
+                child: const RegistrationForm(),
+              ),
+            ),
+          )
+        : const Scaffold(
+            body: RegistrationForm(),
+          );
+  }
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class RegistrationForm extends StatefulWidget {
+  static const String routeName = '/registration';
+  const RegistrationForm({Key? key}) : super(key: key);
+
+  @override
+  State<RegistrationForm> createState() => _RegistrationFormState();
+}
+
+class _RegistrationFormState extends State<RegistrationForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _submitForm(BuildContext context, bool isSubmitting) {
@@ -106,7 +113,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 backgroundColor: Colors.green,
               );
 
-              Navigator.of(context).pushReplacementNamed(NavScreen.routeName);
+              //Navigator.of(context).pushReplacementNamed(NavScreen.routeName);
             }
           },
           builder: (context, state) {
@@ -471,8 +478,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               ),
                               const SizedBox(height: 6.0),
                               TextButton(
-                                onPressed: () => Navigator.of(context)
-                                    .pushNamed(LoginScreen.routeName),
+                                onPressed: () {},
+                                // onPressed: () => Navigator.of(context)
+                                //     .pushNamed(LoginScreen.routeName),
                                 child: const Text(
                                   'Have an Account, Sign In',
                                   style: TextStyle(

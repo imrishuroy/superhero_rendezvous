@@ -1,16 +1,16 @@
-import '/widgets/curved_container.dart';
-import '/screens/profile/widgets/progress_container.dart';
-import '/screens/login/login_screen.dart';
-import '/widgets/app_drawer.dart';
-import '/widgets/display_image.dart';
-import 'edit_profile_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '/constants/constants.dart';
 import '/screens/profile/cubit/profile_cubit.dart';
+import '/screens/profile/widgets/progress_container.dart';
+import '/widgets/app_drawer.dart';
+import '/widgets/curved_container.dart';
+import '/widgets/display_image.dart';
 import '/widgets/loading_indicator.dart';
 import '/widgets/show_snakbar.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '/constants/constants.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -116,9 +116,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             style: ElevatedButton.styleFrom(
                               primary: Contants.primaryColor,
                             ),
-                            onPressed: () => Navigator.of(context)
-                                .pushNamedAndRemoveUntil(
-                                    LoginScreen.routeName, (route) => false),
+                            onPressed: () {},
+
+                            // Navigator.of(context)
+                            //     .pushNamedAndRemoveUntil(
+                            //         LoginScreen.routeName, (route) => false),
                             child: const Text('Login'),
                           ),
                         ],

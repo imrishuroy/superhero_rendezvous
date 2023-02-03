@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/config/shared_prefs.dart';
 import '/constants/constants.dart';
-import '/screens/login/login_screen.dart';
 import '/screens/notifictions/cubit/notifications_cubit.dart';
 import '/screens/notifictions/notifications_screen.dart';
 import '/screens/reset-password/reset_password.dart';
@@ -166,9 +165,9 @@ class AppDrawer extends StatelessWidget {
                             color: Colors.grey.shade600,
                           ),
                         ),
-                        onTap: () => Navigator.of(context)
-                            .pushNamedAndRemoveUntil(
-                                LoginScreen.routeName, (route) => false),
+                        // onTap: () => Navigator.of(context)
+                        //     .pushNamedAndRemoveUntil(
+                        //         LoginScreen.routeName, (route) => false),
                       )
                     : ListTile(
                         title: Text(

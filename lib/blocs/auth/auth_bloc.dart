@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/models/app_user.dart';
@@ -10,7 +11,7 @@ import '/repositories/profile/profile_repository.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
+class AuthBloc extends Bloc<AuthEvent, AuthState> with ChangeNotifier {
   final AuthRepository _authRepository;
   late StreamSubscription<AppUser?> _userSubscription;
 
@@ -70,6 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               ? AuthState.authenticated(promoter: event.user)
               : AuthState.unAuthenticated(),
         );
+        notifyListeners();
       } else if (event is AuthLogoutRequested) {
         await _authRepository.signOut();
       } else if (event is UserProfileImageChanged) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '/config/shared_prefs.dart';
-import '/screens/login/login_screen.dart';
 
 class RegistrationPrompt extends StatelessWidget {
   static const String routeName = '/registrationPrompt';
@@ -64,8 +63,8 @@ class RegistrationPrompt extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     await SharedPrefs().setSkipRegistration(true);
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        LoginScreen.routeName, (route) => false);
+                    // Navigator.of(context).pushNamedAndRemoveUntil(
+                    //     LoginScreen.routeName, (route) => false);
                   },
                   child: Container(
                     height: 44.0,

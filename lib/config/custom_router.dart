@@ -1,87 +1,113 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-import '/screens/dashboard/widgets/twin_details.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import '/blocs/auth/auth_bloc.dart';
+import '/config/service_locator.dart';
+import '/constants/constants.dart';
+import '/home_screen.dart';
+import '/repositories/auth/auth_repo.dart';
+import '/screens/login/cubit/login_cubit.dart';
 import '/screens/login/login_screen.dart';
-import '/screens/nav/nav_screen.dart';
-import '/screens/notifictions/notifications_screen.dart';
-import '/screens/profile/edit_profile_screen.dart';
-import '/screens/registration/screens/registration_prompt.dart';
+import '/screens/registration/cubit/registration_cubit.dart';
 import '/screens/registration/screens/registration_screen.dart';
-import '/screens/reset-password/reset_password.dart';
-import '/screens/splash/splash_screen.dart';
-import 'auth_wrapper.dart';
 
 class CustomRouter {
-  static Route onGenerateRoute(RouteSettings settings) {
-    print('Route: ${settings.name}');
-    switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(
-            settings: const RouteSettings(name: '/'),
-            builder: (_) => const Scaffold());
-
-      case AuthWrapper.routeName:
-        return AuthWrapper.route();
-
-      case SplashScreen.routeName:
-        return SplashScreen.route();
-
-      case NavScreen.routeName:
-        return NavScreen.route();
-
-      case RegistrationPrompt.routeName:
-        return RegistrationPrompt.route();
-
-      case RegistrationScreen.routeName:
-        return RegistrationScreen.route();
-
-      case LoginScreen.routeName:
-        return LoginScreen.route();
-
-      case EditProfileScreen.routeName:
-        return EditProfileScreen.route();
-
-      case NotificationsScreen.routeName:
-        return NotificationsScreen.route();
-
-      case TwinsDetailsScreen.routeName:
-        return TwinsDetailsScreen.route(
-            args: settings.arguments as TwinsDetailsArgs);
-
-      case ResetPassword.routeName:
-        return ResetPassword.route(
-            args: settings.arguments as ResetPasswordArgs?);
-      default:
-        return _errorRoute();
-    }
-  }
-
-  static Route onGenerateNestedRouter(RouteSettings settings) {
-    print('NestedRoute: ${settings.name}');
-    switch (settings.name) {
-      default:
-        return _errorRoute();
-    }
-  }
-
-  static Route _errorRoute() {
-    return MaterialPageRoute(
-      settings: const RouteSettings(name: '/error'),
-      builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Error',
+  static GoRouter router = GoRouter(
+    debugLogDiagnostics: true,
+    //initialLocation: '/',
+    routes: [
+      // GoRoute(
+      //   name: RoutePaths.splash,
+      //   path: '/',
+      //   builder: (context, state) => const SplashScreen(),
+      // ),
+      // GoRoute(
+      //   name: RoutePaths.authWrapper,
+      //   path: '/auth-wrapper',
+      //   builder: (context, state) => const AuthWrapper(),
+      // ),
+      GoRoute(
+        name: RoutePaths.login,
+        path: '/login',
+        builder: (context, state) => BlocProvider(
+          create: (context) => LoginCubit(
+            authRepository: locator<AuthRepository>(),
+            authBloc: locator<AuthBloc>(),
           ),
-        ),
-        body: const Center(
-          child: Text(
-            'Something went wrong',
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
+          child: const LoginScreen(),
         ),
       ),
-    );
+      GoRoute(
+        name: RoutePaths.register,
+        path: '/register',
+        builder: (context, state) => BlocProvider(
+          create: (context) => RegistrationCubit(
+            authRepository: locator<AuthRepository>(),
+            authBloc: locator<AuthBloc>(),
+          ),
+          child: const RegistrationScreen(),
+        ),
+      ),
+      GoRoute(
+        name: RoutePaths.home,
+        path: '/home',
+        builder: (context, state) => const HomeScreen(),
+      ),
+    ],
+    // errorPageBuilder: (context, state) => MaterialPage(
+    //   //key = state.pageKey,
+    //   child = Scaffold(
+    //     body: Center(
+    //       child: Text(
+    //         state.error.toString(),
+    //       ),
+    //     ),
+    //   ),
+    // ),
+    refreshListenable: AuthStateNotifier(),
+    redirect: (context, state) {
+      final authBloc = locator<AuthBloc>();
+      print('Redirecting...');
+      print('Redirecting to ${state.location}');
+      print('Redirecting authstatus ${authBloc.state.status}');
+
+      /// return null;
+
+      // final isLoggedIn = authBloc.state.status == AuthStatus.authenticated;
+      // final isLoggingIn = state.subloc == '/login';
+
+      // if (!isLoggedIn) {
+      //   return '/login';
+      // }
+
+      // if (isLoggingIn) {
+      //   return '/home';
+      // }
+      return null;
+
+      // if (!isLoggedIn && !isLoggingIn) return '/login';
+      // if (isLoggedIn && isLoggingIn) return '/home';
+
+      // return null;
+    },
+  );
+}
+
+class AuthStateNotifier extends ChangeNotifier {
+  late final StreamSubscription<AuthState> _blocStream;
+  AuthStateProvider(AuthBloc bloc) {
+    _blocStream = bloc.stream.listen((event) {
+      notifyListeners();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _blocStream.cancel();
   }
 }
