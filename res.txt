@@ -1,0 +1,6 @@
+how to use flutter_bloc with go_router
+https://stackoverflow.com/questions/70322692/how-to-use-flutter-bloc-with-go-router
+
+https://stackoverflow.com/questions/74323919/how-can-i-redirect-correctly-to-routes-with-gorouter
+
+https://github.com/csells/go_router/discussions/122

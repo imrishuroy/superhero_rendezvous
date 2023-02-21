@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,17 +13,18 @@ import '/screens/login/cubit/login_cubit.dart';
 import '/screens/login/login_screen.dart';
 import '/screens/registration/cubit/registration_cubit.dart';
 import '/screens/registration/screens/registration_screen.dart';
+import '/screens/splash/splash_screen.dart';
 
 class CustomRouter {
   static GoRouter router = GoRouter(
     debugLogDiagnostics: true,
-    //initialLocation: '/',
+    initialLocation: '/',
     routes: [
-      // GoRoute(
-      //   name: RoutePaths.splash,
-      //   path: '/',
-      //   builder: (context, state) => const SplashScreen(),
-      // ),
+      GoRoute(
+        name: RoutePaths.splash,
+        path: '/',
+        builder: (context, state) => const SplashScreen(),
+      ),
       // GoRoute(
       //   name: RoutePaths.authWrapper,
       //   path: '/auth-wrapper',
@@ -56,17 +57,25 @@ class CustomRouter {
         path: '/home',
         builder: (context, state) => const HomeScreen(),
       ),
+      GoRoute(
+        name: RoutePaths.details,
+        path: '/details',
+        builder: (context, state) => const DetailsScreen(),
+      ),
+      GoRoute(
+        name: RoutePaths.newPage,
+        path: '/new-page',
+        builder: (context, state) => const NewPage(),
+      ),
     ],
-    // errorPageBuilder: (context, state) => MaterialPage(
-    //   //key = state.pageKey,
-    //   child = Scaffold(
-    //     body: Center(
-    //       child: Text(
-    //         state.error.toString(),
-    //       ),
-    //     ),
-    //   ),
-    // ),
+    errorPageBuilder: (context, state) => MaterialPage<void>(
+      key: state.pageKey,
+      child: Scaffold(
+        body: Center(
+          child: Text('Error: ${state.error}'),
+        ),
+      ),
+    ),
     refreshListenable: AuthStateNotifier(),
     redirect: (context, state) {
       final authBloc = locator<AuthBloc>();
@@ -76,29 +85,26 @@ class CustomRouter {
 
       /// return null;
 
-      // final isLoggedIn = authBloc.state.status == AuthStatus.authenticated;
-      // final isLoggingIn = state.subloc == '/login';
+      final isLoggedIn = authBloc.state.status == AuthStatus.authenticated;
+      final isLoggingIn = state.subloc == '/login';
 
-      // if (!isLoggedIn) {
-      //   return '/login';
-      // }
+      if (!isLoggedIn) {
+        return '/login';
+      }
 
-      // if (isLoggingIn) {
-      //   return '/home';
-      // }
+      if (isLoggingIn) {
+        return '/home';
+      }
+
+      print('This runs when the user is logged in and not on the login page');
       return null;
-
-      // if (!isLoggedIn && !isLoggingIn) return '/login';
-      // if (isLoggedIn && isLoggingIn) return '/home';
-
-      // return null;
     },
   );
 }
 
 class AuthStateNotifier extends ChangeNotifier {
   late final StreamSubscription<AuthState> _blocStream;
-  AuthStateProvider(AuthBloc bloc) {
+  AuthStateProvider(AuthBloc bloc) async {
     _blocStream = bloc.stream.listen((event) {
       notifyListeners();
     });

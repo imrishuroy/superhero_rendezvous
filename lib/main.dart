@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:superhero_rendezvous/home_screen.dart';
 
+import '/home_screen.dart';
 import 'blocs/auth/auth_bloc.dart';
 import 'blocs/simple_bloc_observer.dart';
 import 'config/service_locator.dart';
@@ -83,6 +83,11 @@ class SuperHeroRendezvous extends StatelessWidget {
         name: RoutePaths.home,
         path: '/home',
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        name: RoutePaths.details,
+        path: '/details',
+        builder: (context, state) => const DetailsScreen(),
       ),
     ],
     refreshListenable: _authBloc,

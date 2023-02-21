@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:superhero_rendezvous/constants/constants.dart';
+
+import '/constants/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = '/splash';
@@ -27,7 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       const Duration(seconds: 2),
       () {
-        context.pushNamed(RoutePaths.authWrapper);
+        context.pushNamed(RoutePaths.login);
+        //context.pushNamed(RoutePaths.authWrapper);
 
         // if (SharedPrefs().skipRegistration) {
         //   Navigator.of(context).pushReplacementNamed(AuthWrapper.routeName);
