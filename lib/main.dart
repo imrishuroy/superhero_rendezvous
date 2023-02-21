@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:superhero_rendezvous/screens/questionnaire/questionnaire_screen.dart';
 
 import '/home_screen.dart';
 import 'blocs/auth/auth_bloc.dart';
@@ -15,7 +16,6 @@ import 'constants/route_paths.dart';
 import 'firebase_options.dart';
 import 'repositories/auth/auth_repo.dart';
 import 'screens/login/cubit/login_cubit.dart';
-import 'screens/login/login_screen.dart';
 import 'screens/registration/cubit/registration_cubit.dart';
 import 'screens/registration/screens/registration_screen.dart';
 
@@ -65,7 +65,8 @@ class SuperHeroRendezvous extends StatelessWidget {
             authRepository: locator<AuthRepository>(),
             authBloc: locator<AuthBloc>(),
           ),
-          child: const LoginScreen(),
+          child: const QuestionnaireScreen(),
+          //child: const LoginScreen(),
         ),
       ),
       GoRoute(
